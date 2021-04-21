@@ -7,5 +7,15 @@ namespace Ex02
 {
     class Program
     {
+        public static void Main()
+        {
+            GameBuilder gameBuilder = new GameBuilder();
+            gameBuilder.StartGame();
+
+
+            Console.WriteLine("Press enter to exit");
+            Console.ReadLine();
+        }
+
     }
 }
