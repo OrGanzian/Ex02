@@ -9,8 +9,9 @@ namespace Ex02
     {
         public static void Main()
         {
-            GameBuilder gameBuilder = new GameBuilder();
-            gameBuilder.StartGame();
+            Matrix mat = new Matrix( 6);
+            ConsoleUserInterface ui = new ConsoleUserInterface();
+            ui.ToText(mat);
 
 
             Console.WriteLine("Press enter to exit");

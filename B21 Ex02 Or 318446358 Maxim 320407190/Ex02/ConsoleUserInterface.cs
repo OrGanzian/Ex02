@@ -23,10 +23,34 @@ namespace Ex02
             return size;
         }
 
+        public void ToText(Matrix i_matrix)
+        {
+            StringBuilder matrixText = new StringBuilder();
+            StringBuilder separationRow = new StringBuilder();
+
+            for (int i = 1; i <= i_matrix.NumOfCols; i++)
+            {
+                matrixText.AppendFormat("  {0} ", i);
+                separationRow.Append("====");
+            }
+
+            separationRow.Append("=");
+            matrixText.Append("\n");
+            for (int i = 0; i < i_matrix.NumOfRows; i++)
+            {
+                for (int j = 0; j < i_matrix.NumOfCols; j++)
+                {
+                    matrixText.AppendFormat("| {0} ", i_matrix.GetPlaceValue(i,j));
+                }
+
+                matrixText.AppendFormat("| \n{0} \n", separationRow);
+            }
+
+            Console.WriteLine(matrixText);
+        }
 
 
 
-        
 
     }
 }
