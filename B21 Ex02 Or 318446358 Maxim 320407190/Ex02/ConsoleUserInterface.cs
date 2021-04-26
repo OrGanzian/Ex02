@@ -49,6 +49,20 @@ namespace Ex02
             Console.WriteLine(matrixText);
         }
 
+        
+        public  bool GetOpponet() // the method return true for  
+        {
+            bool flag = true;
+            Console.WriteLine("Who do you want to play against?\npress Enter to 1v1 mode, enter C to play against the computer ");
+            string vText = Console.ReadLine();
+
+            if (vText.ToLower() == "c")
+            {
+                flag = false;
+            }
+
+            return flag;
+        }
 
 
 

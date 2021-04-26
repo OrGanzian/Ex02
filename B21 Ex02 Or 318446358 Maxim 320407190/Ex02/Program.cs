@@ -12,8 +12,8 @@ namespace Ex02
             Matrix mat = new Matrix( 6);
             ConsoleUserInterface ui = new ConsoleUserInterface();
             ui.ToText(mat);
-
-
+            bool ans =ui.GetOpponet();
+            Console.WriteLine(ans);
             Console.WriteLine("Press enter to exit");
             Console.ReadLine();
         }
