@@ -95,12 +95,13 @@ namespace Ex02
         }
 
 
+        public bool CheckCellAvailability
     
 
         public bool CheckWinner()
         {
             return true;
-            //TODO
+            //MAX TODO
         }
 
 
