@@ -23,7 +23,7 @@ namespace Ex02
             return size;
         }
 
-        public void ToText(Matrix i_matrix)
+        public void PrintMatrix(Matrix i_matrix)
         {
             StringBuilder matrixText = new StringBuilder();
             StringBuilder separationRow = new StringBuilder();
@@ -40,7 +40,7 @@ namespace Ex02
             {
                 for (int j = 0; j < i_matrix.NumOfCols; j++)
                 {
-                    matrixText.AppendFormat("| {0} ", i_matrix.GetPlaceValue(i,j));
+                    matrixText.AppendFormat("| {0} ", i_matrix.GetValueByIndex(i, j));
                 }
 
                 matrixText.AppendFormat("| \n{0} \n", separationRow);
@@ -49,8 +49,8 @@ namespace Ex02
             Console.WriteLine(matrixText);
         }
 
-        
-        public  bool GetOpponet() // the method return true for  
+
+        public bool GetOpponet() // the method return true for 1v1 mode . false for vs PC
         {
             bool flag = true;
             Console.WriteLine("Who do you want to play against?\npress Enter to 1v1 mode, enter C to play against the computer ");
@@ -62,6 +62,67 @@ namespace Ex02
             }
 
             return flag;
+        }
+
+
+        public int GetRowPlayerTurnInput()
+        {
+            Console.WriteLine("Please enter row:");
+            int row;
+            int.TryParse(Console.ReadLine(), out row);
+
+           
+            return row;
+        }
+
+        public int GetColumnPlayerTurnInput()
+        {
+            Console.WriteLine("Please enter Column:");
+            int Column;
+            int.TryParse(Console.ReadLine(), out Column);
+           
+
+            return Column;
+        }
+
+        public  void ClearScreen()
+        {
+            Ex02.ConsoleUtils.Screen.Clear();
+        }
+
+        public  bool IsPlayAagain()
+        {
+            string input;
+            bool flag = false;
+
+            do
+            {
+                Console.WriteLine("Do you want to play again? y/n");
+                input = Console.ReadLine();
+            }
+            while (input.ToLower() != "y" && input.ToLower() != "n");
+
+            if (input.ToLower() == "y")
+            {
+                flag = true;
+            }
+
+            return flag;
+        }
+
+
+     
+
+        public void StartGame()
+        {
+            int size = GetMatrixSize();
+            bool versus = GetOpponet();
+            Round round = new Round(versus, size);
+            ClearScreen();
+           // round.StartSingleRoundVersusPc();
+            round.StartSingleRoundVersusFriend();
+
+
         }
 
 

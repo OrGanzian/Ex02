@@ -33,23 +33,75 @@ namespace Ex02
             }
         }
 
-        public char GetPlaceValue(int i_Row, int i_Col)
+        public char GetValueByIndex(int i_Row, int i_Col)
         {
+            
             return this.m_Matrix[i_Row, i_Col];
+        }
+
+
+        public bool SetValueByIndex(int i_Row, int i_Col,char i_iValue) // value is 'X' or 'O'
+        {
+            bool isOccupied = false;
+            if ( (m_Matrix[i_Row, i_Col] != 'X' && m_Matrix[i_Row, i_Col] != 'O') ) 
+            {
+                this.m_Matrix[i_Row, i_Col] = i_iValue;
+                isOccupied = true;
+
+            }
+            else
+            {
+                isOccupied = false;
+            }
+            return isOccupied;
         }
 
 
 
 
+        public bool IsFull()
+        {
+            bool flag = true;
+
+            for (int i = 0; i < this.m_Cols; i++)
+            {
+                for (int j = 0; j < this.m_Rows; j++)
+                {
+                    if (m_Matrix[i, j] != 'X' && m_Matrix[i, j] != 'O')
+                    {
+                        flag = false;
+                        break;
+                    }
+                }
+                
+            }
+
+            return flag;
+        }
 
 
+        public void Clear()
+        {
+
+            for (int i = 0; i < this.m_Cols; i++)
+            {
+                for (int j = 0; j < this.m_Rows; j++)
+                {
+                    this.m_Matrix[i, j] = ' ';
+                }
+
+            }
+
+        }
 
 
+    
 
-
-
-
-
+        public bool CheckWinner()
+        {
+            return true;
+            //TODO
+        }
 
 
 
