@@ -7,15 +7,16 @@ namespace Ex02
 {
     class Round
     {
+        PCPlayer pcPlayer = new PCPlayer();
         ConsoleUserInterface consoleUserInterface=new ConsoleUserInterface();
         private Matrix m_Matrix;
-        private bool m_Versus; ////true 1v1
+        private bool m_VersusFriend; ////true 1v1
 
       
         public Round(bool i_Versus, int i_size)
         {
             this.m_Matrix = new Matrix(i_size);
-            this.m_Versus = i_Versus;
+            this.m_VersusFriend = i_Versus;
          
            
         }
@@ -50,7 +51,18 @@ namespace Ex02
                 }
                 else
                 {
-                    this.m_Matrix.SetValueByIndex(row, column, 'O');
+
+                    if (this.m_VersusFriend)
+                    {
+                        this.m_Matrix.SetValueByIndex(row, column, 'O'); // turn for 'O'
+                    }
+                    else //play against PC logic
+                    {
+                        this.pcPlayer.PlaySingleTurn(this.m_Matrix);
+
+
+                    }
+
                 }
 
                 turn++;
@@ -74,6 +86,8 @@ namespace Ex02
          // TODO
         }
 
-        
+        public bool  
+
+
     }
 }

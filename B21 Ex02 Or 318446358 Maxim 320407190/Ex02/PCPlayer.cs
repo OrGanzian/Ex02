@@ -7,5 +7,12 @@ namespace Ex02
 {
     class PCPlayer
     {
+        public bool PlaySingleTurn(Matrix I_Matrix)
+        {
+
+            return true;
+            //TODO
+        }
+
     }
 }

@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="ConsoleUserInterface.cs" />
     <Compile Include="Matrix.cs" />
+    <Compile Include="PCPlayer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Round.cs" />
   </ItemGroup>
