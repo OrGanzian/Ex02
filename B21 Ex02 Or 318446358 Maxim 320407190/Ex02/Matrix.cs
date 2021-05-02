@@ -95,8 +95,13 @@ namespace Ex02
         }
 
 
-        public bool CheckCellAvailability
-    
+        public bool CheckCellAvailability(int I_Row,int _Col)
+        {
+            return true;
+            // already done some validation in SetValueByIndex(), so need to complete it with indeces larger than the board
+          
+        }
+
 
         public bool CheckWinner()
         {
