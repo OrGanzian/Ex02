@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Ex02
 {
-    class PCPlayer
+    class PcPlayer
     {
-        public bool PlaySingleTurn(Matrix I_Matrix)
+        public bool PlaySingleTurn(Board I_Board)
         {
 
             return true;

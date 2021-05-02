@@ -2,45 +2,115 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Ex02.ConsoleUtils;
+using Ex02;
 
 namespace Ex02
 {
     public class ConsoleUserInterface
     {
+        private const int k_MinBoardSize = 3;
+        private const int k_MaxBoardSize = 9;
+        private TicTacToeFlow m_GameFlow;
+        private Player m_Player1 = new Player("Player1", 'X');
+        private Player m_Player2 = new Player("Player2", 'O');
+        private Player m_CurrentPlayer;
 
-        public int GetMatrixSize()
+        public void InitializeGame()
         {
-            Console.WriteLine("Please enter your board size:");
-            int size;
-            bool flag = int.TryParse(Console.ReadLine(), out size);
+            Console.WriteLine("Welcome to Reversed TicTacToe Game :)");
+            int size = GetBoardSize();
+            bool versus = GetOpponet();
+            m_GameFlow = new TicTacToeFlow(versus, size);
+            startSingleGame(); //1 game
+        }
 
-            while (!flag || (size > 9 || size < 3))
+        private void startSingleGame()
+        {
+            m_CurrentPlayer = m_Player1;
+            PrintBoard(m_GameFlow.DisplayBoard);
+
+            while (true)
             {
-                Console.WriteLine("The sizes must be between 3 to 9!\nPlease enter new size.:");
-                flag = int.TryParse(Console.ReadLine(), out size);
+                if (m_GameFlow.GameMode)//True = User vs User user (NOT PC)
+                {
+                    userTurn();
+                    togglePlayerTurn();
+                }
+
+                PrintBoard(m_GameFlow.DisplayBoard);
+
+                if (m_GameFlow.boardFull())
+                {
+                    Console.WriteLine("The board is full, DRAW");
+                    break;
+                }
+
+                if (m_GameFlow.checkIfWinner())
+                {
+
+                }
+
+                
+            }
+            
+
+        }
+
+        private void userTurn()
+        {
+            int row = GetRowPlayerTurnInput();
+            int column = GetColumnPlayerTurnInput();
+            m_GameFlow.setBoardValues(row, column,m_CurrentPlayer.getSymbol());
+        }
+
+        private void togglePlayerTurn()
+        {
+            m_CurrentPlayer = getNextPlayer();
+        }
+
+        private Player getNextPlayer()
+        {
+            return m_CurrentPlayer == m_Player1 ? m_Player2 : m_Player1;
+        }
+
+        public int GetBoardSize()
+        {
+            Console.WriteLine(string.Format("Please enter TicTacToe Board game dimensions: ({0}-{1}) ", k_MinBoardSize, k_MaxBoardSize));
+            int size;
+            bool inputFlag = int.TryParse(Console.ReadLine(), out size);
+
+            while (!inputFlag || (size > 9 || size < 3))
+            {
+                Screen.Clear();
+                Console.WriteLine(string.Format("Invalid input,Please enter board size ({0}-{1})", k_MinBoardSize, k_MaxBoardSize));
+                inputFlag = int.TryParse(Console.ReadLine(), out size);
             }
 
             return size;
         }
 
-        public void PrintMatrix(Matrix i_matrix)
+        public void PrintBoard(Board i_Board)
         {
             StringBuilder matrixText = new StringBuilder();
             StringBuilder separationRow = new StringBuilder();
+            Screen.Clear();
 
-            for (int i = 1; i <= i_matrix.NumOfCols; i++)
+            separationRow.Append("  ");
+            for (int i = 1; i <= i_Board.NumOfCols; i++)
             {
-                matrixText.AppendFormat("  {0} ", i);
+                matrixText.AppendFormat("   {0} ", i);
                 separationRow.Append("====");
             }
 
             separationRow.Append("=");
             matrixText.Append("\n");
-            for (int i = 0; i < i_matrix.NumOfRows; i++)
+            for (int i = 0; i < i_Board.NumOfRows; i++)
             {
-                for (int j = 0; j < i_matrix.NumOfCols; j++)
+                matrixText.AppendFormat("{0} ", i);
+                for (int j = 0; j < i_Board.NumOfCols; j++)
                 {
-                    matrixText.AppendFormat("| {0} ", i_matrix.GetValueByIndex(i, j));
+                    matrixText.AppendFormat("| {0} ", i_Board.GetValueByIndex(i, j));
                 }
 
                 matrixText.AppendFormat("| \n{0} \n", separationRow);
@@ -49,11 +119,11 @@ namespace Ex02
             Console.WriteLine(matrixText);
         }
 
-
         public bool GetOpponet() // the method return true for 1v1 mode . false for vs PC
         {
             bool flag = true;
-            Console.WriteLine("Who do you want to play against?\npress Enter to 1v1 mode, enter C to play against the computer ");
+            Screen.Clear();
+            Console.WriteLine(string.Format("Who do you want to play against?{0}Press 'ENTER' to Player vs Player mode,{0}Press 'C' to Play vs Computer", Environment.NewLine));
             string vText = Console.ReadLine();
 
             if (vText.ToLower() == "c")
@@ -64,14 +134,12 @@ namespace Ex02
             return flag;
         }
 
-
         public int GetRowPlayerTurnInput()
         {
             Console.WriteLine("Please enter row:");
             int row;
             int.TryParse(Console.ReadLine(), out row);
 
-           
             return row;
         }
 
@@ -85,9 +153,9 @@ namespace Ex02
             return Column;
         }
 
-        public  void ClearScreen()
+        public void ClearScreen()
         {
-            Ex02.ConsoleUtils.Screen.Clear();
+            Screen.Clear();
         }
 
         public  bool IsPlayAagain()
@@ -109,23 +177,6 @@ namespace Ex02
 
             return flag;
         }
-
-
-     
-
-        public void StartGame()
-        {
-            int size = GetMatrixSize();
-            bool versus = GetOpponet();
-            Round round = new Round(versus, size);
-            ClearScreen();
-           // round.StartSingleRoundVersusPc();
-            round.StartSingleRoundVersusFriend();
-
-
-        }
-
-
 
     }
 }

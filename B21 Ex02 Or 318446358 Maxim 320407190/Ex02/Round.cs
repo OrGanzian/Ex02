@@ -7,18 +7,16 @@ namespace Ex02
 {
     class Round
     {
-        PCPlayer pcPlayer = new PCPlayer();
+        PcPlayer m_PcPlayer = new PcPlayer();
         ConsoleUserInterface consoleUserInterface=new ConsoleUserInterface();
-        private Matrix m_Matrix;
+        private Board m_Board;
         private bool m_VersusFriend; ////true 1v1
 
       
         public Round(bool i_Versus, int i_size)
         {
-            this.m_Matrix = new Matrix(i_size);
-            this.m_VersusFriend = i_Versus;
-         
-           
+            this.m_Board = new Board(i_size);
+            this.m_VersusFriend = i_Versus; 
         }
 
         public void StartSingleRoundVersusFriend()
@@ -27,11 +25,11 @@ namespace Ex02
             bool playAgain = true;
             int turn = 0;
 
-            while (!m_Matrix.IsFull() && playAgain)
+            while (!m_Board.IsFull() && playAgain)
             {
 
                 this.consoleUserInterface.ClearScreen();
-                this.consoleUserInterface.PrintMatrix(this.m_Matrix);
+                this.consoleUserInterface.PrintBoard(this.m_Board);
 
                 int row = this.consoleUserInterface.GetRowPlayerTurnInput();
                 int column = this.consoleUserInterface.GetColumnPlayerTurnInput();
@@ -39,11 +37,11 @@ namespace Ex02
                 if (turn%2==0) // turn for 'X'
                 {
 
-                     isIndexAvailable =this.m_Matrix.SetValueByIndex(row, column, 'X');
+                     isIndexAvailable =this.m_Board.SetValueByIndex(row, column, 'X');
                     while (!isIndexAvailable)
                     {
                          row = this.consoleUserInterface.GetRowPlayerTurnInput();
-                        isIndexAvailable = this.m_Matrix.SetValueByIndex(row, column, 'X');
+                        isIndexAvailable = this.m_Board.SetValueByIndex(row, column, 'X');
 
 
                     }
@@ -54,11 +52,11 @@ namespace Ex02
 
                     if (this.m_VersusFriend)
                     {
-                        this.m_Matrix.SetValueByIndex(row, column, 'O'); // turn for 'O'
+                        this.m_Board.SetValueByIndex(row, column, 'O'); // turn for 'O'
                     }
                     else //play against PC logic
                     {
-                        this.pcPlayer.PlaySingleTurn(this.m_Matrix);
+                        this.m_PcPlayer.PlaySingleTurn(this.m_Board);
 
 
                     }
@@ -66,7 +64,7 @@ namespace Ex02
                 }
 
                 turn++;
-                this.consoleUserInterface.PrintMatrix(this.m_Matrix);
+                this.consoleUserInterface.PrintBoard(this.m_Board);
 
               
 
@@ -76,7 +74,7 @@ namespace Ex02
             
             if (consoleUserInterface.IsPlayAagain())
             {
-                this.m_Matrix.Clear();
+                this.m_Board.Clear();
             }
 
         }

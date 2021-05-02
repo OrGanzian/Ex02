@@ -9,9 +9,9 @@ namespace Ex02
     {
         public static void Main()
         {
-            //test
             ConsoleUserInterface consoleUserInterface = new ConsoleUserInterface();
-            consoleUserInterface.StartGame();
+            consoleUserInterface.InitializeGame();
+
             Console.WriteLine("Press enter to exit");
             Console.ReadLine();
         }
