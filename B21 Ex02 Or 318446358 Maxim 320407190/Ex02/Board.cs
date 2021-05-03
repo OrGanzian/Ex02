@@ -19,7 +19,26 @@ namespace Ex02
             InitializeBoard();
         }
 
-        public void InitializeBoard()
+        public List<List<int>> GetFreeIndecies()
+        {
+            List<List<int>> listOfFreeIndecies = new List<List<int>>();
+
+            for (int i = 0; i < this.m_Cols; i++)
+            {
+                for (int j = 0; j < this.m_Rows; j++)
+                {
+                    if (m_Matrix[i, j] == ' ')
+                    {
+                        listOfFreeIndecies.Add(new List<int> { i, j });
+                    }
+                }
+
+            }
+
+            return listOfFreeIndecies;
+        }
+
+        public void InitializeBoard()//Init empty Board Game
         {
             for (int i = 0; i < this.m_Rows; i++)
             {
@@ -56,29 +75,24 @@ namespace Ex02
 
         public char GetValueByIndex(int i_Row, int i_Col)
         {
-            
             return this.m_Matrix[i_Row, i_Col];
         }
 
-
-        public bool SetValueByIndex(int i_Row, int i_Col,char i_iValue) // value is 'X' or 'O'
+        public bool SetValueByIndex(int i_Row, int i_Col, char i_iValue) // value is 'X' or 'O'
         {
-            bool isOccupied = false;
-            if ( (m_Matrix[i_Row, i_Col] == ' ') ) 
+            bool isSuccesfulInput = false;
+
+            if (m_Matrix[i_Row, i_Col] == ' ')
             {
                 this.m_Matrix[i_Row, i_Col] = i_iValue;
-                isOccupied = true;
-
+                isSuccesfulInput = true;
             }
-            else
+            else if (m_Matrix[i_Row, i_Col] == 'X' || m_Matrix[i_Row, i_Col] == 'O')
             {
-                isOccupied = false;
+                isSuccesfulInput = false;
             }
-            return isOccupied;
+            return isSuccesfulInput;
         }
-
-
-
 
         public bool IsFull()
         {
@@ -94,12 +108,11 @@ namespace Ex02
                         break;
                     }
                 }
-                
+
             }
 
             return flag;
         }
-
 
         public void Clear()
         {
@@ -115,7 +128,7 @@ namespace Ex02
 
         }
 
-        public bool IsMatchInRows(char i_SymbolToCheck) 
+        public bool IsMatchInRows(char i_SymbolToCheck)
         {
             bool match = false;
             int counterRow = 0;
@@ -139,6 +152,7 @@ namespace Ex02
             }
             return match;
         }
+
         public bool IsMAtchInColumns(char i_SymbolToCheck)
         {
             int columnsCounter = 0;
@@ -210,7 +224,7 @@ namespace Ex02
             return match;
         }
 
-        public bool checkIfMatch(char i_SymbolToCheck) 
+        public bool checkIfMatch(char i_SymbolToCheck)
         {
             bool matchStatus = false;
             if (IsMatchInRows(i_SymbolToCheck) || IsMAtchInColumns(i_SymbolToCheck) ||
@@ -221,22 +235,7 @@ namespace Ex02
             return matchStatus;
         }
 
-        public bool CheckCellAvailability(int I_Row,int _Col)
-        {
-            return true;
-            // already done some validation in SetValueByIndex(), so need to complete it with indeces larger than the board
-          
-        }
-
-
-        public bool CheckWinner()
-        {
-            return true;
-            //MAX TODO
-        }
-
-
-
+        
 
     }//class
 

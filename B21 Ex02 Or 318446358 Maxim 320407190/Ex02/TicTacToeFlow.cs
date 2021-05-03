@@ -8,14 +8,12 @@ namespace Ex02
     class TicTacToeFlow
     {
         private Board m_Board;
-        private bool m_VersusFriend;
-       
+        private PcPlayer m_PcPlayer;
 
-        public TicTacToeFlow(bool i_Versus, int i_size)
+        public TicTacToeFlow(int i_size)
         {
             this.m_Board = new Board(i_size);
-            this.m_VersusFriend = i_Versus;
-
+            this.m_PcPlayer = new PcPlayer();
         }
 
         public Board DisplayBoard
@@ -26,13 +24,14 @@ namespace Ex02
             }
         }
 
-        public bool IfUserMode
+        public List<int> GetRandomizedIndeciesByPC()
         {
-            get
-            {
-                return this.m_VersusFriend;
-            }
+            List<List<int>> listOfFreeIndecies = this.m_Board.GetFreeIndecies();
+            List<int> listOf2RandomizedIndecies = m_PcPlayer.RandFreeIndex(listOfFreeIndecies);
+            return listOf2RandomizedIndecies;
+
         }
+
         public bool CheckBoardRange(int i_InputNumber)
         {
             bool rangeStatus = false;
@@ -44,9 +43,9 @@ namespace Ex02
             return rangeStatus;
         }
 
-        public void setBoardValues(int i_Row,int i_Column,char i_Symbol)
+        public bool setBoardValues(int i_Row,int i_Column,char i_Symbol)
         {
-            m_Board.SetValueByIndex(i_Row, i_Column, i_Symbol);
+            return m_Board.SetValueByIndex(i_Row, i_Column, i_Symbol);
         }
 
         public bool boardFull()
@@ -58,71 +57,6 @@ namespace Ex02
         {
             return this.m_Board.checkIfMatch(i_SymbolToCheck);
         }
-
-       /* public void StartSingleRoundVersusFriend()
-        {
-            bool isIndexAvailable = false;
-            bool playAgain = true;
-            int turn = 0;
-
-            while (!m_Board.IsFull() && playAgain)
-            {
-
-                this.consoleUserInterface.ClearScreen();
-                this.consoleUserInterface.PrintBoard(this.m_Board);
-
-                int row = this.consoleUserInterface.GetRowPlayerTurnInput();
-                int column = this.consoleUserInterface.GetColumnPlayerTurnInput();
-
-                if (turn % 2 == 0) // turn for 'X'
-                {
-
-                    isIndexAvailable = this.m_Board.SetValueByIndex(row, column, 'X');
-                    while (!isIndexAvailable)
-                    {
-                        row = this.consoleUserInterface.GetRowPlayerTurnInput();
-                        isIndexAvailable = this.m_Board.SetValueByIndex(row, column, 'X');
-
-
-                    }
-
-                }
-                else
-                {
-
-                    if (this.m_VersusFriend)
-                    {
-                        this.m_Board.SetValueByIndex(row, column, 'O'); // turn for 'O'
-                    }
-                    else //play against PC logic
-                    {
-                        this.m_PcPlayer.PlaySingleTurn(this.m_Board);
-
-
-                    }
-
-                }
-
-                turn++;
-                this.consoleUserInterface.PrintBoard(this.m_Board);
-
-
-
-            }
-
-
-
-            if (consoleUserInterface.IsPlayAagain())
-            {
-                this.m_Board.Clear();
-            }
-
-        }
-*/
-
-
-
-
 
     }
 }

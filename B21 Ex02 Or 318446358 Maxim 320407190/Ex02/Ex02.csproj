@@ -43,7 +43,6 @@
     <Compile Include="PcPlayer.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Round.cs" />
     <Compile Include="TicTacToeFlow.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

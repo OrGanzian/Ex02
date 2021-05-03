@@ -7,12 +7,16 @@ namespace Ex02
 {
     class PcPlayer
     {
-        public bool PlaySingleTurn(Board I_Board)
+        public List<int> RandFreeIndex(List<List<int>> i_ListOfFreeIndecies)
         {
+            List<int> indexList = new List<int>();
+            Random randomizedNumber = new Random();
+            int randomNumber = randomizedNumber.Next(1, i_ListOfFreeIndecies.Count);
 
-            return true;
-            //Max TODO
+            indexList.Add(i_ListOfFreeIndecies[randomNumber][0]);
+            indexList.Add(i_ListOfFreeIndecies[randomNumber][1]);
+
+            return indexList;
         }
-
     }
 }

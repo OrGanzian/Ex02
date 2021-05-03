@@ -5,12 +5,10 @@ using System.Text;
 
 namespace Ex02
 {
-    class Enums
+    public enum ePlayerType
     {
-        public enum ePlayerType
-        {
-            User = 1,
-            Computer = 2
-        }
+        User = 1,
+        Computer = 2
     }
+   
 }

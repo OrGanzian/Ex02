@@ -12,19 +12,33 @@ namespace Ex02
         private const int k_MinBoardSize = 3;
         private const int k_MaxBoardSize = 9;
         private TicTacToeFlow m_GameFlow;
-        private Player m_Player1 = new Player("Player1", 'X');
-        private Player m_Player2 = new Player("Player2", 'O');
+        private Player m_Player1;
+        private Player m_Player2;
         private Player m_CurrentPlayer;
 
         public void InitializeGame()
         {
             Console.WriteLine("Welcome to Reversed TicTacToe Game :)");
             int size = GetBoardSize();
-            bool versus = GetOpponet();
-            m_GameFlow = new TicTacToeFlow(versus, size);
-            startSingleGame(); //1 game
+            m_Player1 = new Player("First Player", 'X', ePlayerType.User);
+            m_Player2 = new Player("Second Player", 'O', getOpponentType());
+            m_GameFlow = new TicTacToeFlow(size);
+            startSingleGame();
+            /*TODO:  
+            1. Play multiple games
+            2. Add Display scores
+            3. Add Q to exit
+            4. Fix method names
+            */
+
+         /*   while (true)
+            {
+                startSingleGame(); //1 game
+            }
+            */
         }
 
+        
         private void startSingleGame()
         {
             m_CurrentPlayer = m_Player1;
@@ -32,13 +46,13 @@ namespace Ex02
 
             while (true)
             {
-                if (m_GameFlow.IfUserMode)//True = User vs User user (NOT PC)
+                if (m_CurrentPlayer.PlayerType == ePlayerType.User)
                 {
                     userTurn();
                 }
-                else 
+                else//PC Move
                 {
-
+                    pcTurn();
                 }
 
                 PrintBoard(m_GameFlow.DisplayBoard);
@@ -51,26 +65,56 @@ namespace Ex02
 
                 if (m_GameFlow.checkIfLose(m_CurrentPlayer.getSymbol()))
                 {
-                    Console.WriteLine("{0} Loose! :(((", m_CurrentPlayer.getName());
+                    Console.WriteLine("{0} Lose! :(((", m_CurrentPlayer.getName());
                     break;
-
                 }
 
                 togglePlayerTurn();
-
-
             }
-            
+        }
+
+        private ePlayerType getOpponentType()
+        {
+            ePlayerType typeOfPlayer = ePlayerType.User;
+            Screen.Clear();
+            Console.WriteLine(string.Format("Who do you want to play against?{0}{0}Press 'ENTER' to Player vs Player mode,{0}Press 'C' to Play vs Computer", Environment.NewLine));
+            string vText = Console.ReadLine();
+
+            if (vText.ToLower() == "c")
+            {
+                typeOfPlayer = ePlayerType.Computer;
+            }
+
+            return typeOfPlayer;
 
         }
 
         private void userTurn()
         {
-            Console.WriteLine("~[User vs User mode]~ \n", m_CurrentPlayer.getName());
-            Console.WriteLine("[{0}] is playing", m_CurrentPlayer.getName());
+            Console.WriteLine("[{0}] is playing,you are [X]", m_CurrentPlayer.getName());
             int row = GetRowPlayerTurnInput();
             int column = GetColumnPlayerTurnInput();
-            m_GameFlow.setBoardValues(row, column,m_CurrentPlayer.getSymbol());
+
+            while (!setCoordinates(row, column, m_CurrentPlayer.getSymbol()))
+            {
+                Screen.Clear();
+                PrintBoard(m_GameFlow.DisplayBoard);
+                Console.WriteLine(string.Format("This Index is allready occupied,use another Index"));
+                row = GetRowPlayerTurnInput();
+                column = GetColumnPlayerTurnInput();
+            }
+
+        }
+
+        private void pcTurn()
+        { 
+            List<int> listOf2RandomizedIndecies = m_GameFlow.GetRandomizedIndeciesByPC();
+            setCoordinates(listOf2RandomizedIndecies[0], listOf2RandomizedIndecies[1], m_CurrentPlayer.getSymbol());
+        }
+
+        private bool setCoordinates(int i_Row,int i_Column,char i_Symbol)
+        {
+            return m_GameFlow.setBoardValues(i_Row, i_Column, i_Symbol);
         }
 
         private void togglePlayerTurn()
@@ -89,7 +133,7 @@ namespace Ex02
             int size;
             bool inputFlag = int.TryParse(Console.ReadLine(), out size);
 
-            while (!inputFlag || (size > 9 || size < 3))
+            while (!inputFlag || (size > k_MaxBoardSize || size < k_MinBoardSize))
             {
                 Screen.Clear();
                 Console.WriteLine(string.Format("Invalid input,Please enter board size ({0}-{1})", k_MinBoardSize, k_MaxBoardSize));
@@ -99,7 +143,7 @@ namespace Ex02
             return size;
         }
 
-        public void PrintBoard(Board i_Board)
+        public void PrintBoard(Board i_Board)//TODO :Fix drawing sizes + Fix indexes
         {
             StringBuilder matrixText = new StringBuilder();
             StringBuilder separationRow = new StringBuilder();
@@ -128,21 +172,6 @@ namespace Ex02
             Console.WriteLine(matrixText);
         }
 
-        public bool GetOpponet() // the method return true for 1v1 mode . false for vs PC
-        {
-            bool flag = true;
-            Screen.Clear();
-            Console.WriteLine(string.Format("Who do you want to play against?{0}Press 'ENTER' to Player vs Player mode,{0}Press 'C' to Play vs Computer", Environment.NewLine));
-            string vText = Console.ReadLine();
-
-            if (vText.ToLower() == "c")
-            {
-                flag = false;
-            }
-
-            return flag;
-        }
-
         public int GetRowPlayerTurnInput()
         {
             Console.WriteLine("Please enter Row:");
@@ -151,7 +180,9 @@ namespace Ex02
 
             while (!inputFlag || !m_GameFlow.CheckBoardRange(row))
             {
-                Console.WriteLine(string.Format("Your input for Row is not correct"));
+                Screen.Clear();
+                PrintBoard(m_GameFlow.DisplayBoard);
+                Console.WriteLine(string.Format("Your input for Row is not correct,try correct index:"));
                 inputFlag = int.TryParse(Console.ReadLine(), out row);
             }
 
@@ -166,16 +197,13 @@ namespace Ex02
 
             while (!inputFlag || !m_GameFlow.CheckBoardRange(column))
             {
-                Console.WriteLine(string.Format("Your input for Column is not correct"));
+                Screen.Clear();
+                PrintBoard(m_GameFlow.DisplayBoard);
+                Console.WriteLine(string.Format("Your input for Column is not correct,try correct index:"));
                 inputFlag = int.TryParse(Console.ReadLine(), out column);
             }
 
             return column;
-        }
-
-        public void ClearScreen()
-        {
-            Screen.Clear();
         }
 
         public  bool IsPlayAagain()
