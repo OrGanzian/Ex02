@@ -26,12 +26,22 @@ namespace Ex02
             }
         }
 
-        public bool GameMode
+        public bool IfUserMode
         {
             get
             {
                 return this.m_VersusFriend;
             }
+        }
+        public bool CheckBoardRange(int i_InputNumber)
+        {
+            bool rangeStatus = false;
+            if (i_InputNumber >= 0 && i_InputNumber < this.m_Board.NumOfRows)
+            {
+                rangeStatus = true;
+            }
+
+            return rangeStatus;
         }
 
         public void setBoardValues(int i_Row,int i_Column,char i_Symbol)
@@ -44,9 +54,9 @@ namespace Ex02
             return this.m_Board.IsFull();
         }
 
-        public bool checkIfWinner()
+        public bool checkIfLose(char i_SymbolToCheck)
         {
-            return true;
+            return this.m_Board.checkIfMatch(i_SymbolToCheck);
         }
 
        /* public void StartSingleRoundVersusFriend()

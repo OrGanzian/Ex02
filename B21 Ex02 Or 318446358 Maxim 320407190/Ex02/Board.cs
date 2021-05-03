@@ -16,7 +16,20 @@ namespace Ex02
             this.m_Matrix = new char[i_size, i_size];
             this.m_Rows = i_size;
             this.m_Cols = i_size;
+            InitializeBoard();
         }
+
+        public void InitializeBoard()
+        {
+            for (int i = 0; i < this.m_Rows; i++)
+            {
+                for (int j = 0; j < this.m_Cols; j++)
+                {
+                    this.m_Matrix[i, j] = ' ';
+                }
+            }
+        }
+
         public int NumOfRows
         {
             get
@@ -51,7 +64,7 @@ namespace Ex02
         public bool SetValueByIndex(int i_Row, int i_Col,char i_iValue) // value is 'X' or 'O'
         {
             bool isOccupied = false;
-            if ( (m_Matrix[i_Row, i_Col] != 'X' && m_Matrix[i_Row, i_Col] != 'O') ) 
+            if ( (m_Matrix[i_Row, i_Col] == ' ') ) 
             {
                 this.m_Matrix[i_Row, i_Col] = i_iValue;
                 isOccupied = true;
@@ -102,6 +115,111 @@ namespace Ex02
 
         }
 
+        public bool IsMatchInRows(char i_SymbolToCheck) 
+        {
+            bool match = false;
+            int counterRow = 0;
+
+            for (int i = 0; i < this.m_Rows; i++)
+            {
+                counterRow = 0;
+                for (int j = 0; j < this.m_Cols; j++)
+                {
+                    if (this.m_Matrix[i, j] == i_SymbolToCheck)
+                    {
+                        counterRow++;
+                    }
+                    if (counterRow == this.m_Rows)
+                    {
+                        match = true;
+                        break;
+                    }
+                }
+
+            }
+            return match;
+        }
+        public bool IsMAtchInColumns(char i_SymbolToCheck)
+        {
+            int columnsCounter = 0;
+            bool match = false;
+
+            for (int i = 0; i < this.m_Rows; i++)
+            {
+                columnsCounter = 0;
+                for (int j = 0; j < this.m_Cols; j++)
+                {
+                    if (this.m_Matrix[j, i] == i_SymbolToCheck)
+                    {
+                        columnsCounter++;
+                    }
+                    if (columnsCounter == this.m_Rows)
+                    {
+                        match = true;
+                        break;
+                    }
+                }
+
+            }
+            return match;
+        }
+
+        public bool IsMatchInDiagonal(char i_SymbolToCheck)
+        {
+            int diagonalCounter = 0;
+            bool match = false;
+
+            for (int i = 0; i < this.m_Rows; i++)
+            {
+                if (m_Matrix[i, i] == i_SymbolToCheck)
+                {
+                    diagonalCounter++;
+                }
+            }
+
+            if (diagonalCounter == this.m_Rows)
+            {
+                match = true;
+            }
+
+            return match;
+        }
+
+        public bool IsMatchInReverseDiagonal(char i_SymbolToCheck)
+        {
+            int diagonalCounter = 0;
+            bool match = false;
+            int row = this.m_Rows;
+            row--;
+
+            for (int i = 0; i < this.m_Rows; i++)
+            {
+                if (m_Matrix[i, row] == i_SymbolToCheck)
+                {
+                    diagonalCounter++;
+                }
+
+                row--;
+            }
+
+            if (diagonalCounter == this.m_Rows)
+            {
+                match = true;
+            }
+
+            return match;
+        }
+
+        public bool checkIfMatch(char i_SymbolToCheck) 
+        {
+            bool matchStatus = false;
+            if (IsMatchInRows(i_SymbolToCheck) || IsMAtchInColumns(i_SymbolToCheck) ||
+                IsMatchInDiagonal(i_SymbolToCheck) || IsMatchInReverseDiagonal(i_SymbolToCheck))
+            {
+                matchStatus = true;
+            }
+            return matchStatus;
+        }
 
         public bool CheckCellAvailability(int I_Row,int _Col)
         {

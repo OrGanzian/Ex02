@@ -7,23 +7,28 @@ namespace Ex02
 {
     class Player
     {
-        private int score = 0;
-        private string m_playerName;
-        private char m_symbol;
+        private int m_Score = 0;
+        private string m_PlayerName;
+        private char m_Symbol;
         public Player(string i_PlayerName,char i_Symbol)
         {
-            m_playerName = i_PlayerName;
-            m_symbol = i_Symbol;
+            m_PlayerName = i_PlayerName;
+            m_Symbol = i_Symbol;
         }
 
         private void AddScore()
         {
-            score++;
+            m_Score++;
         }
 
         public char getSymbol()
         {
-            return this.m_symbol;
+            return this.m_Symbol;
+        }
+
+        public string getName()
+        {
+            return this.m_PlayerName;
         }
 
         /*public int Score { get; private set; }

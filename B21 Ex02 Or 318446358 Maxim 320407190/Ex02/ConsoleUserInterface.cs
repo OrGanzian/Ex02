@@ -32,26 +32,33 @@ namespace Ex02
 
             while (true)
             {
-                if (m_GameFlow.GameMode)//True = User vs User user (NOT PC)
+                if (m_GameFlow.IfUserMode)//True = User vs User user (NOT PC)
                 {
                     userTurn();
-                    togglePlayerTurn();
+                }
+                else 
+                {
+
                 }
 
                 PrintBoard(m_GameFlow.DisplayBoard);
 
                 if (m_GameFlow.boardFull())
                 {
-                    Console.WriteLine("The board is full, DRAW");
+                    Console.WriteLine("The board is full, No one wins at this Round");
                     break;
                 }
 
-                if (m_GameFlow.checkIfWinner())
+                if (m_GameFlow.checkIfLose(m_CurrentPlayer.getSymbol()))
                 {
+                    Console.WriteLine("{0} Loose! :(((", m_CurrentPlayer.getName());
+                    break;
 
                 }
 
-                
+                togglePlayerTurn();
+
+
             }
             
 
@@ -59,6 +66,8 @@ namespace Ex02
 
         private void userTurn()
         {
+            Console.WriteLine("~[User vs User mode]~ \n", m_CurrentPlayer.getName());
+            Console.WriteLine("[{0}] is playing", m_CurrentPlayer.getName());
             int row = GetRowPlayerTurnInput();
             int column = GetColumnPlayerTurnInput();
             m_GameFlow.setBoardValues(row, column,m_CurrentPlayer.getSymbol());
@@ -136,9 +145,15 @@ namespace Ex02
 
         public int GetRowPlayerTurnInput()
         {
-            Console.WriteLine("Please enter row:");
+            Console.WriteLine("Please enter Row:");
             int row;
-            int.TryParse(Console.ReadLine(), out row);
+            bool inputFlag = int.TryParse(Console.ReadLine(), out row);
+
+            while (!inputFlag || !m_GameFlow.CheckBoardRange(row))
+            {
+                Console.WriteLine(string.Format("Your input for Row is not correct"));
+                inputFlag = int.TryParse(Console.ReadLine(), out row);
+            }
 
             return row;
         }
@@ -146,11 +161,16 @@ namespace Ex02
         public int GetColumnPlayerTurnInput()
         {
             Console.WriteLine("Please enter Column:");
-            int Column;
-            int.TryParse(Console.ReadLine(), out Column);
-           
+            int column;
+            bool inputFlag = int.TryParse(Console.ReadLine(), out column);
 
-            return Column;
+            while (!inputFlag || !m_GameFlow.CheckBoardRange(column))
+            {
+                Console.WriteLine(string.Format("Your input for Column is not correct"));
+                inputFlag = int.TryParse(Console.ReadLine(), out column);
+            }
+
+            return column;
         }
 
         public void ClearScreen()
