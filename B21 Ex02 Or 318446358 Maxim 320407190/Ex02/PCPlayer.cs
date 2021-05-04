@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Ex02
 {
-    class PcPlayer
+    public class PcPlayer
     {
         public List<int> RandFreeIndex(List<List<int>> i_ListOfFreeIndecies)
         {

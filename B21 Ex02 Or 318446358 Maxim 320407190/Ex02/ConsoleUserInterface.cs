@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Ex02.ConsoleUtils;
-using Ex02;
 
 namespace Ex02
 {
@@ -24,29 +22,18 @@ namespace Ex02
             m_Player2 = new Player("Second Player", 'O', getOpponentType());
             m_GameFlow = new TicTacToeFlow(size);
        
-
-
-          while(true)
+            while(true)
             {
-
                 startSingleGame();
-
                 PrintScore(m_Player1, m_Player2);
-
 
                 if(getQuitOption())
                 {
                     break;
                 }
-
             }
-
-
-
-
         }
 
-        
         private void startSingleGame()
         {
             m_CurrentPlayer = m_Player1;
@@ -58,18 +45,12 @@ namespace Ex02
                 {
                     userTurn();
                 }
-                else//PC Move
+                else
                 {
                     pcTurn();
                 }
 
                 printBoard(m_GameFlow.DisplayBoard);
-
-                if (m_GameFlow.BoardFull())
-                {
-                    Console.WriteLine("The board is full, No one wins at this Round");
-                    break;
-                }
 
                 if (m_GameFlow.CheckIfLose(m_CurrentPlayer.Symbol))
                 {
@@ -77,6 +58,12 @@ namespace Ex02
                     m_CurrentPlayer.AddScore();
                     Console.WriteLine("{0} Win! :)))", m_CurrentPlayer.Name);
                     m_GameFlow.InitializeBoard();
+                    break;
+                }
+
+                if (m_GameFlow.BoardFull())
+                {
+                    Console.WriteLine("The board is full, No one wins at this Round");
                     break;
                 }
 
@@ -97,7 +84,6 @@ namespace Ex02
             }
 
             return typeOfPlayer;
-
         }
 
         public void PrintScore(Player first, Player sec)
@@ -108,7 +94,7 @@ namespace Ex02
 
         private void userTurn()
         {
-            Console.WriteLine("[{0}] is playing,you are [{1}]", m_CurrentPlayer.Name,m_CurrentPlayer.Symbol);
+            Console.WriteLine("[{0}] is playing,you are [{1}]", m_CurrentPlayer.Name, m_CurrentPlayer.Symbol);
             int row = getRowPlayerTurnInput();
             int column = getColumnPlayerTurnInput();
 
@@ -120,7 +106,6 @@ namespace Ex02
                 row = getRowPlayerTurnInput();
                 column = getColumnPlayerTurnInput();
             }
-
         }
 
         private void pcTurn()
@@ -129,7 +114,7 @@ namespace Ex02
             setCoordinates(listOf2RandomizedIndecies[0], listOf2RandomizedIndecies[1], m_CurrentPlayer.Symbol);
         }
 
-        private bool setCoordinates(int i_Row,int i_Column,char i_Symbol)
+        private bool setCoordinates(int i_Row, int i_Column, char i_Symbol)
         {
             return m_GameFlow.SetBoardValues(i_Row, i_Column, i_Symbol);
         }
@@ -160,9 +145,6 @@ namespace Ex02
             return size;
         }
 
-
-
-
         private void printBoard(Board i_Board)
         {
             StringBuilder matrixText = new StringBuilder();
@@ -192,7 +174,6 @@ namespace Ex02
 
             Console.WriteLine(matrixText);
         }
-
 
         private int getRowPlayerTurnInput()
         {
@@ -230,27 +211,6 @@ namespace Ex02
             return column;
         }
 
-        private  bool isPlayAagain()
-        {
-            string input;
-            bool flag = false;
-
-            do
-            {
-                Console.WriteLine("Do you want to play again? y/n");
-                input = Console.ReadLine();
-            }
-            while (input.ToLower() != "y" && input.ToLower() != "n");
-
-            if (input.ToLower() == "y")
-            {
-                flag = true;
-            }
-
-            return flag;
-        }
-
-
         private bool getQuitOption()
         {
             bool quit = false;
@@ -259,14 +219,10 @@ namespace Ex02
 
             if (input.ToLower() == "q")
             {
-                quit = true ;
+                quit = true;
             }
 
             return quit;
-
         }
-
-      
-
     }
 }

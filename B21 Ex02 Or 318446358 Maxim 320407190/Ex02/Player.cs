@@ -36,11 +36,6 @@ namespace Ex02
             }
         }
 
-        public void AddScore()
-        {
-            m_Score++;
-        }
-
         public char Symbol
         {
             get
@@ -48,7 +43,6 @@ namespace Ex02
                 return this.m_Symbol;
             }
         }
-
 
         public string Name
         {
@@ -58,6 +52,9 @@ namespace Ex02
             }
         }
 
-
+        public void AddScore()
+        {
+            m_Score++;
+        }
     }
 }

@@ -5,16 +5,12 @@ using System.Text;
 
 namespace Ex02
 {
-    class Program
+    public class Program
     {
         public static void Main()
         {
             ConsoleUserInterface consoleUserInterface = new ConsoleUserInterface();
             consoleUserInterface.InitializeGame();
-
-            Console.WriteLine("Press enter to exit");
-            Console.ReadLine();
         }
-
     }
 }

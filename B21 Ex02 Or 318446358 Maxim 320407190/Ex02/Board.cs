@@ -32,13 +32,12 @@ namespace Ex02
                         listOfFreeIndecies.Add(new List<int> { i, j });
                     }
                 }
-
             }
 
             return listOfFreeIndecies;
         }
 
-        public void InitializeBoard()//Init empty Board Game
+        public void InitializeBoard()
         {
             for (int i = 0; i < this.m_Rows; i++)
             {
@@ -91,6 +90,7 @@ namespace Ex02
             {
                 isSuccesfulInput = false;
             }
+
             return isSuccesfulInput;
         }
 
@@ -108,7 +108,6 @@ namespace Ex02
                         break;
                     }
                 }
-
             }
 
             return flag;
@@ -116,16 +115,13 @@ namespace Ex02
 
         public void Clear()
         {
-
             for (int i = 0; i < this.m_Cols; i++)
             {
                 for (int j = 0; j < this.m_Rows; j++)
                 {
                     this.m_Matrix[i, j] = ' ';
                 }
-
             }
-
         }
 
         public bool IsMatchInRows(char i_SymbolToCheck)
@@ -142,14 +138,16 @@ namespace Ex02
                     {
                         counterRow++;
                     }
+
                     if (counterRow == this.m_Rows)
                     {
                         match = true;
+
                         break;
                     }
                 }
-
             }
+
             return match;
         }
 
@@ -167,14 +165,15 @@ namespace Ex02
                     {
                         columnsCounter++;
                     }
+
                     if (columnsCounter == this.m_Rows)
                     {
                         match = true;
                         break;
                     }
                 }
-
             }
+
             return match;
         }
 
@@ -227,21 +226,14 @@ namespace Ex02
         public bool CheckIfMatch(char i_SymbolToCheck)
         {
             bool matchStatus = false;
+
             if (IsMatchInRows(i_SymbolToCheck) || IsMAtchInColumns(i_SymbolToCheck) ||
                 IsMatchInDiagonal(i_SymbolToCheck) || IsMatchInReverseDiagonal(i_SymbolToCheck))
             {
                 matchStatus = true;
             }
+
             return matchStatus;
         }
-
-        
-
     }
-
-
-
-
-
-
 }

@@ -9,6 +9,5 @@ namespace Ex02
     {
         User = 1,
         Computer = 2
-    }
-   
+    }   
 }

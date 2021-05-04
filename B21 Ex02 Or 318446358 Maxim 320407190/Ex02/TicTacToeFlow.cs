@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Ex02
 {
-    class TicTacToeFlow
+    public class TicTacToeFlow
     {
         private Board m_Board;
         private PcPlayer m_PcPlayer;
@@ -28,8 +28,8 @@ namespace Ex02
         {
             List<List<int>> listOfFreeIndecies = this.m_Board.GetFreeIndecies();
             List<int> listOf2RandomizedIndecies = m_PcPlayer.RandFreeIndex(listOfFreeIndecies);
-            return listOf2RandomizedIndecies;
 
+            return listOf2RandomizedIndecies;
         }
 
         public bool CheckBoardRange(int i_InputNumber)
@@ -43,7 +43,7 @@ namespace Ex02
             return rangeStatus;
         }
 
-        public bool SetBoardValues(int i_Row,int i_Column,char i_Symbol)
+        public bool SetBoardValues(int i_Row, int i_Column, char i_Symbol)
         {
             return m_Board.SetValueByIndex(i_Row, i_Column, i_Symbol);
         }
@@ -62,6 +62,5 @@ namespace Ex02
         {
             this.m_Board.InitializeBoard();
         }
-
     }
 }
