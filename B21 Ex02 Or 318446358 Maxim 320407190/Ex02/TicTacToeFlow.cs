@@ -43,19 +43,24 @@ namespace Ex02
             return rangeStatus;
         }
 
-        public bool setBoardValues(int i_Row,int i_Column,char i_Symbol)
+        public bool SetBoardValues(int i_Row,int i_Column,char i_Symbol)
         {
             return m_Board.SetValueByIndex(i_Row, i_Column, i_Symbol);
         }
 
-        public bool boardFull()
+        public bool BoardFull()
         {
             return this.m_Board.IsFull();
         }
 
-        public bool checkIfLose(char i_SymbolToCheck)
+        public bool CheckIfLose(char i_SymbolToCheck)
         {
-            return this.m_Board.checkIfMatch(i_SymbolToCheck);
+            return this.m_Board.CheckIfMatch(i_SymbolToCheck);
+        }
+
+        public void InitializeBoard()
+        {
+            this.m_Board.InitializeBoard();
         }
 
     }

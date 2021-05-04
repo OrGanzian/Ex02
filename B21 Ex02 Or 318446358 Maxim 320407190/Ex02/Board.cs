@@ -224,7 +224,7 @@ namespace Ex02
             return match;
         }
 
-        public bool checkIfMatch(char i_SymbolToCheck)
+        public bool CheckIfMatch(char i_SymbolToCheck)
         {
             bool matchStatus = false;
             if (IsMatchInRows(i_SymbolToCheck) || IsMAtchInColumns(i_SymbolToCheck) ||
@@ -237,11 +237,11 @@ namespace Ex02
 
         
 
-    }//class
+    }
 
 
 
 
 
 
-}//namespace
+}

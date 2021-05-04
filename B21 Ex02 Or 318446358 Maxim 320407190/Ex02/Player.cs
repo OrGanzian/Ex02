@@ -6,7 +6,7 @@ using Ex02;
 
 namespace Ex02
 {
-    class Player
+    public class Player
     {
         private int m_Score = 0;
         private string m_PlayerName;
@@ -28,19 +28,36 @@ namespace Ex02
             }
         }
 
-        private void AddScore()
+        public int Score
+        {
+            get
+            {
+                return m_Score;
+            }
+        }
+
+        public void AddScore()
         {
             m_Score++;
         }
 
-        public char getSymbol()//Property
+        public char Symbol
         {
-            return this.m_Symbol;
+            get
+            {
+                return this.m_Symbol;
+            }
         }
 
-        public string getName()//Property
+
+        public string Name
         {
-            return this.m_PlayerName;
+            get
+            {
+                return this.m_PlayerName;
+            }
         }
+
+
     }
 }
